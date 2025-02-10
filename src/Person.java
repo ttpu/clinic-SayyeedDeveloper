@@ -1,17 +1,27 @@
 public class Person {
+    private final String first, last, ssn;
+    private Doctor doctor;
+    public Person(String first, String last, String ssn) {
+        this.first = first;
+        this.last = last;
+        this.ssn = ssn;
+    }
+
     public String getSSN(){
-        return null;
+        return this.ssn;
     }
 
     public String getFirst() {
-        return null;
+        return this.first;
     }
 
     public String getLast() {
-        return null;
+        return this.last;
     }
-
+    public void setDoctor(Doctor doctor){
+        this.doctor = doctor;
+    }
     public Doctor getDoctor() {
-        return null;
+        return this.doctor;
     }
 }
