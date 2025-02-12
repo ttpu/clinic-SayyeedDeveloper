@@ -1,3 +1,5 @@
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.IOException;
 import java.util.Collection;
 import java.util.HashMap;
@@ -84,6 +86,21 @@ public class Clinic {
     }
 
     public void loadData(String path) throws IOException {
-
+        FileReader fr = new FileReader(path);
+        BufferedReader br = new BufferedReader(fr);
+        String line;
+        while ((line = br.readLine()) != null){
+            try {
+                String[] parts = line.split(";");
+                if(parts[0].equals("P")){
+                    addPatient(parts[1], parts[2], parts[3]);
+                }else if(parts[0].equals("M")){
+                    int docId = Integer.parseInt(parts[1]);
+                    addDoctor(parts[2], parts[3], parts[4], docId, parts[5]);
+                }else {
+                    throw new IOException();
+                }
+            }catch (Exception e){}
+        }
     }
 }

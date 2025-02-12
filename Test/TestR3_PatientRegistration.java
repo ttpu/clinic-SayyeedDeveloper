@@ -41,7 +41,6 @@ public class TestR3_PatientRegistration extends TestCase {
 
         assertEquals(2,listOfPatients.size());
 
-
     }
 
 }
