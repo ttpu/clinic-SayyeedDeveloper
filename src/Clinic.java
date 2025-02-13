@@ -1,10 +1,7 @@
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 public class Clinic {
 
@@ -115,7 +112,29 @@ public class Clinic {
      * represent the number of patients (printed on three characters).
      */
     public Collection<String> countPatientsPerSpecialization(){
-        return null;
+        Map<String, Integer> specCount = new HashMap<>();
+
+        for(Doctor i: doctors.values()){
+            String spec = i.getSpecialization();
+            int patientCount = i.getPatients().size();
+            specCount.put(spec, specCount.getOrDefault(spec, 0) + patientCount);
+        }
+
+        List<String> result = new ArrayList<>();
+        for (Map.Entry<String, Integer> entry: specCount.entrySet()){
+            String formatted = String.format("%3d %s", entry.getValue(), entry.getKey());
+            result.add(formatted);
+        }
+        result.sort((s1, s2)->{
+            int count1 = Integer.parseInt(s1.substring(0, 3).trim());
+            int count2 = Integer.parseInt(s2.substring(0, 3).trim());
+            if (count1 != count2) {
+                return Integer.compare(count2, count1);
+            } else {
+                return s1.substring(4).compareTo(s2.substring(4));
+            }
+        }) ;
+        return result;
     }
 
     public void loadData(String path) throws IOException {
@@ -133,7 +152,9 @@ public class Clinic {
                 }else {
                     throw new IOException();
                 }
-            }catch (Exception e){}
+            }catch (Exception e){
+                System.out.println(e);
+            }
         }
     }
 }
