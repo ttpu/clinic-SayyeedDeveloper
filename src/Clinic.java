@@ -1,8 +1,10 @@
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 
 public class Clinic {
 
@@ -53,14 +55,35 @@ public class Clinic {
      * returns the collection of doctors that have no patient at all, sorted in alphabetic order.
      */
     Collection<Doctor> idleDoctors(){
-        return null;
+        List<Doctor> idleDoctors = new ArrayList<>();
+        for (Doctor i : doctors.values()) {
+            if (i.getPatients().size() == 0){
+                idleDoctors.add(i);
+            }
+        }
+        idleDoctors.sort((d1, d2) -> d1.getFirst().compareTo(d2.getFirst()));
+        return idleDoctors;
     }
 
     /**
      * returns the collection of doctors that a number of patients larger than the average.
      */
     Collection<Doctor> busyDoctors(){
-        return null;
+        List<Doctor> busyDoctors = new ArrayList<>();
+        int totalPatients = 0;
+        int doctorCount = doctors.size();
+        for (Doctor i: doctors.values()){
+            totalPatients += i.getPatients().size();
+        }
+        double averagePatients = (double) totalPatients / doctorCount;
+
+        for(Doctor j : doctors.values()){
+            if(j.getPatients().size() > averagePatients){
+                busyDoctors.add(j);
+            }
+        }
+        busyDoctors.sort((d1, d2) -> d1.getFirst().compareTo(d2.getFirst()));
+        return busyDoctors;
     }
 
     /**
