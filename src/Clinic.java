@@ -94,7 +94,17 @@ public class Clinic {
      * represent the number of patients (printed on three characters).
      */
     Collection<String> doctorsByNumPatients(){
-        return null;
+        List<String> result = new ArrayList<>();
+        List<Doctor> docList = new ArrayList<>(doctors.values());
+
+        docList.sort((d1, d2) -> Integer.compare(d2.getPatients().size(), d1.getPatients().size()));
+
+        for (Doctor i: docList) {
+            String formatted = String.format("%3d: %s %s", i.getPatients().size(), i.getFirst(), i.getLast());
+            result.add(formatted);
+        }
+
+        return result;
     }
 
     /**
